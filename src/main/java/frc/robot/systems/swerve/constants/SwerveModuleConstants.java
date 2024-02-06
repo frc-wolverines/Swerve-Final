@@ -8,6 +8,7 @@ public class SwerveModuleConstants {
     public static final double kDriveGearRatio  = 1 / 8.14;
     public static final double kPivotGearRatio = 1 / 21.4285714;
     public static final double kWheelCircumference = Units.inchesToMeters(4) * Math.PI;
+    public static final double kMaxMetersPerSecond = Units.feetToMeters(12.5);
 
     /** 
      * [0] Position  

@@ -6,7 +6,7 @@ public class ModuleInterface {
     public int pivotCAN_ID = 0;
     public int absoluteEncoderCAN_ID = 0;
     public boolean reverseDriveMotor = false;
-    public boolean absoluteEncoderReversed = false;
+    public boolean reverseAbsoluteEncoder = false;
 
     public ModuleInterface(
         int drive_id,
@@ -16,5 +16,9 @@ public class ModuleInterface {
         boolean reverse_absolute_encoder
     ) {
         this.driveCAN_ID = drive_id; //Tom wrote dis line of code
+        this.pivotCAN_ID = pivot_id;
+        this.absoluteEncoderCAN_ID = absolute_encoder_id;
+        this.reverseDriveMotor = reverse_drive;
+        this.reverseAbsoluteEncoder = reverse_absolute_encoder;
     }
 }
