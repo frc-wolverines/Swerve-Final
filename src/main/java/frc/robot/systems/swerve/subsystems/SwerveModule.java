@@ -23,20 +23,27 @@ public class SwerveModule extends ModuleFrame {
     //PID Controller
     private PIDController pivotController = null;
 
+    /** Constructs a new SwerveModule instance */
     public SwerveModule() {
+
+        //Motor Definition
         driveMotor = new CANSparkMax(0, MotorType.kBrushless);
         pivotMotor = new CANSparkMax(0, MotorType.kBrushless);
 
+        //Drive Encoder Definition and Configuration
         driveEncoder = driveMotor.getEncoder();
         driveEncoder.setPositionConversionFactor(SwerveModuleConstants.kDriveConversions[0]);
         driveEncoder.setVelocityConversionFactor(SwerveModuleConstants.kDriveConversions[1]);
 
+        //Pivot Encoder Definition and Configuration
         pivotEncoder = pivotMotor.getEncoder();
         pivotEncoder.setPositionConversionFactor(SwerveModuleConstants.kPivotConversions[0]);
         pivotEncoder.setVelocityConversionFactor(SwerveModuleConstants.kPivotConversions[1]);
 
+        //CAN-Coder Definition
         absoluteEncoder = new CANcoder(0);
 
+        //PID Controller Definition and Configuration
         pivotController = new PIDController(0, 0, 0);
         pivotController.enableContinuousInput(-Math.PI, Math.PI);
     }
