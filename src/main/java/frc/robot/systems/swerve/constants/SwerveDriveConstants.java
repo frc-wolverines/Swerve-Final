@@ -7,7 +7,7 @@ import frc.robot.systems.swerve.util.ModuleInterface;
 
 public class SwerveDriveConstants {
 
-    public static final double kMaxChassisSpeed = 12.5;
+    public static final double kMaxChassisSpeed = Units.feetToMeters(12.5);
     public static final double kMaxChassisAngularSpeed = 5.0 * Math.PI;
 
     public static final double kWheelDistance = Units.inchesToMeters(24.0);
