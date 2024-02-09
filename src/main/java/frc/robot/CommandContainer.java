@@ -32,6 +32,6 @@ public class CommandContainer {
 
   public Command getAutonomousCommand() {
     new AlertLogger("Could not verify integrity of configured autonomous command", StringAlertType.FAULT);
-    return Commands.print("");
+    return Commands.none();
   }
 }
