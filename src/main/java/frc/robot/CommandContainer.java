@@ -6,13 +6,27 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.systems.swerve.commands.SwerveDriveResetHeading;
+import frc.robot.systems.swerve.commands.SwerveDriveTeleopController;
+import frc.robot.systems.swerve.subsystems.SwerveDrive;
 
 public class CommandContainer {
+
+  public SwerveDrive swerveSubsystem = new SwerveDrive();
+
+  public CommandXboxController xboxController = new CommandXboxController(0);
+
   public CommandContainer() {
+
+    swerveSubsystem.setDefaultCommand(new SwerveDriveTeleopController(swerveSubsystem, xboxController));
+
     configureBindings();
   }
 
-  private void configureBindings() {}
+  private void configureBindings() {
+    xboxController.start().onTrue(new SwerveDriveResetHeading(swerveSubsystem));
+  }
 
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
