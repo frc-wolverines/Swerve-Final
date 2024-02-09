@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.sql.Driver;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -17,7 +19,7 @@ public class CommandContainer {
 
   public SwerveDrive swerveSubsystem = new SwerveDrive();
 
-  public CommandXboxController xboxController = new CommandXboxController(0);
+  public CommandXboxController xboxController = new CommandXboxController(DriverUtil.kDriverControllerPort);
 
   public CommandContainer() {
 
