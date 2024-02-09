@@ -1,6 +1,7 @@
 package frc.robot.systems.swerve.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -59,6 +60,16 @@ public class SwerveDrive extends SubsystemBase implements DriveFrame{
                 new AlertLogger("Error initializing " + this.getName(), StringAlertType.ERROR);
             }
         }).start();
+
+        AutoBuilder.configureHolonomic(
+            this::getPose2d, 
+            this::resetPose, 
+            this::getSpeeds, 
+            this::setRelativeSpeeds, 
+            SwerveDriveConstants.drivePathFollowerConfig, 
+            () -> {return true;}, 
+            this
+        );
     }
 
     @Override
