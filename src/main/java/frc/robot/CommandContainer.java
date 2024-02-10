@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.montylib.util.AlertLogger;
 import frc.montylib.util.AlertLogger.StringAlertType;
-import frc.robot.systems.swerve.commands.SwerveDriveResetHeading;
-import frc.robot.systems.swerve.commands.SwerveDriveTeleopController;
+import frc.robot.systems.swerve.commands.ResetRobotHeading;
+import frc.robot.systems.swerve.commands.DriveBaseTeleController;
 import frc.robot.systems.swerve.subsystems.SwerveDrive;
 
 public class CommandContainer {
@@ -17,13 +17,13 @@ public class CommandContainer {
 
   public CommandContainer() {
 
-    swerveSubsystem.setDefaultCommand(new SwerveDriveTeleopController(swerveSubsystem, xboxController));
+    swerveSubsystem.setDefaultCommand(new DriveBaseTeleController(swerveSubsystem, xboxController));
 
     configureBindings();
   }
 
   private void configureBindings() {
-    xboxController.start().onTrue(new SwerveDriveResetHeading(swerveSubsystem));
+    xboxController.start().onTrue(new ResetRobotHeading(swerveSubsystem));
   }
 
   public Command getAutonomousCommand() {

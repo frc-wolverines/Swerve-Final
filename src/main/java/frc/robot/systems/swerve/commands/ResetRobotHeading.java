@@ -3,11 +3,11 @@ package frc.robot.systems.swerve.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.systems.swerve.subsystems.SwerveDrive;
 
-public class SwerveDriveResetHeading extends Command {
+public class ResetRobotHeading extends Command {
 
   private SwerveDrive drive;
 
-  public SwerveDriveResetHeading(SwerveDrive subsystem) {
+  public ResetRobotHeading(SwerveDrive subsystem) {
     this.drive = subsystem;
   }
 
