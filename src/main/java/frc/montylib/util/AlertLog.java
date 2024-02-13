@@ -2,7 +2,7 @@ package frc.montylib.util;
 
 import edu.wpi.first.wpilibj.DriverStation;
 
-public class AlertLogger {
+public class AlertLog {
     public enum StringAlertType {
         INFO,
         WARNING,
@@ -11,7 +11,7 @@ public class AlertLogger {
         FAULT
     }
 
-    public AlertLogger(String alert_message, StringAlertType type) {
+    public AlertLog(String alert_message, StringAlertType type) {
         switch (type) {
             case CRITICAL_ERROR:
                 DriverStation.reportError("[CRITICAL ERROR] " + alert_message, false);;

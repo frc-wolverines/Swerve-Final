@@ -1,4 +1,4 @@
-package frc.robot.systems.swerve;
+package frc.robot.systems.swerve.util;
 
 public class ModuleConfig {
     //Controllable Area Network IDs

@@ -2,9 +2,12 @@ package frc.robot.systems.swerve;
 
 import com.pathplanner.lib.util.PIDConstants;
 
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.montylib.util.MontyUnits;
-import frc.robot.systems.swerve.ModuleConfig.Direction;
+import frc.robot.systems.swerve.util.ModuleConfig;
+import frc.robot.systems.swerve.util.ModuleConfig.Direction;
 
 public class DriveConstants {
     //PID Constants for the pivot motor's PIDController
@@ -42,4 +45,20 @@ public class DriveConstants {
         kPivotGearRatio * MontyUnits.RADIANS_PER_REVOLUTION,
         (kPivotGearRatio * MontyUnits.RADIANS_PER_REVOLUTION) / 60
     };
+
+    //Drive Kinematics Variables
+    public static final double kTrackRadius = Units.feetToMeters(29) / 2;
+
+    public static final Translation2d kLeftFrontModulePosition = new Translation2d(kTrackRadius, kTrackRadius);
+    public static final Translation2d kRightFrontModulePosition = new Translation2d(kTrackRadius, -kTrackRadius);
+    public static final Translation2d kLeftBackModulePosition = new Translation2d(-kTrackRadius, kTrackRadius);
+    public static final Translation2d kRightBackModulePosition = new Translation2d(-kTrackRadius, -kTrackRadius);
+
+    //Drive Kinematics
+    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
+        kLeftFrontModulePosition,
+        kRightFrontModulePosition,
+        kLeftBackModulePosition,
+        kRightBackModulePosition
+    );
 }
