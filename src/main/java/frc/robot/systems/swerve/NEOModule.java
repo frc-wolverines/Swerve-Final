@@ -8,14 +8,14 @@ import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.montylib.swerve.ModuleIOFrame;
-import frc.montylib.util.hardware.NEOv1;
+import frc.montylib.util.Directions.MotorDirection;
+import frc.montylib.util.hardware.NEO;
 import frc.robot.systems.swerve.util.ModuleConfig;
-import frc.robot.systems.swerve.util.ModuleConfig.Direction;
 
 public class NEOModule extends ModuleIOFrame {
 
     //NEO Brushless v1.1 Motors
-    private NEOv1 driveMotor, pivotMotor = null;
+    private NEO driveMotor, pivotMotor = null;
     
     //Encoders - Relative binded to motors and CANcoder absolute encoder
     private RelativeEncoder driveEncoder, pivotEncoder = null;
@@ -23,7 +23,7 @@ public class NEOModule extends ModuleIOFrame {
 
     //PIDController for pivot motion and absolute encoder direction (Module may be inverted like MK4i)
     private PIDController pivotController = null;
-    private Direction absoluteEncoderDirection = null;
+    private MotorDirection absoluteEncoderDirection = null;
 
     /**
      * Constructs a new instance of NEOModule
@@ -31,12 +31,12 @@ public class NEOModule extends ModuleIOFrame {
      */
     public NEOModule(ModuleConfig config) {
         //Motors
-        driveMotor = new NEOv1(config.drive_id);
-        pivotMotor = new NEOv1(config.pivot_id);
+        driveMotor = new NEO(config.drive_id);
+        pivotMotor = new NEO(config.pivot_id);
 
         //Motor directions
-        driveMotor.setInverted(ModuleConfig.getDirectionAsBoolean(config.drive_motor_direction));
-        pivotMotor.setInverted(ModuleConfig.getDirectionAsBoolean(config.pivot_motor_direction));
+        driveMotor.setInverted(config.drive_motor_direction.getAsBoolean());
+        pivotMotor.setInverted(config.pivot_motor_direction.getAsBoolean());
 
         //Drive Encoder
         driveEncoder = driveMotor.getEncoder();
@@ -92,7 +92,7 @@ public class NEOModule extends ModuleIOFrame {
 
     public double getPivotAbsolutePosition() {
         //Returns the current wheel absolute pivot position in radians traveled
-        return absoluteEncoderDirection == Direction.REVERSE ? 
+        return absoluteEncoderDirection == MotorDirection.REVERSE ? 
             -absoluteEncoder.getAbsolutePosition().getValueAsDouble() : absoluteEncoder.getAbsolutePosition().getValueAsDouble();
     }
 

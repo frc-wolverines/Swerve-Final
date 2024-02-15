@@ -6,8 +6,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.util.Units;
 import frc.montylib.util.MontyUnits;
+import frc.montylib.util.Directions.MotorDirection;
 import frc.robot.systems.swerve.util.ModuleConfig;
-import frc.robot.systems.swerve.util.ModuleConfig.Direction;
 
 public class DriveConstants {
     //PID Constants for the pivot motor's PIDController
@@ -17,13 +17,13 @@ public class DriveConstants {
     /**0 -> LEFTFRONT, 1 -> RIGHTFRONT, 2 -> LEFTBACK, 3 -> RIGHTBACK */
     public static final ModuleConfig[] kDriveConfig = {
         new ModuleConfig(
-            2, 3, 4, Direction.FORWARD, Direction.FORWARD, Direction.REVERSE),
+            2, 3, 4, MotorDirection.FORWARD, MotorDirection.FORWARD, MotorDirection.REVERSE),
         new ModuleConfig(
-            5, 6, 7, Direction.REVERSE, Direction.FORWARD, Direction.REVERSE),
+            5, 6, 7, MotorDirection.REVERSE, MotorDirection.FORWARD, MotorDirection.REVERSE),
         new ModuleConfig(
-            8, 9, 10, Direction.FORWARD, Direction.FORWARD, Direction.REVERSE),
+            8, 9, 10, MotorDirection.FORWARD, MotorDirection.FORWARD, MotorDirection.REVERSE),
         new ModuleConfig(
-            11, 12, 13, Direction.REVERSE, Direction.FORWARD, Direction.REVERSE)
+            11, 12, 13, MotorDirection.REVERSE, MotorDirection.FORWARD, MotorDirection.REVERSE)
     };
 
     //Max Module Speed and Wheel Circumference
