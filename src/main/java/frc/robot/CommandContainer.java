@@ -23,11 +23,13 @@ public class CommandContainer {
 
   private void configureBindings() {
 
+    //Different Drive modes
     xboxController.leftBumper().whileTrue(new SwerveController(RobotDriveMode.STANDARD_ROBOT_RELATIVE, swerveDrive, xboxController));
     xboxController.rightBumper().whileTrue(new SwerveController(RobotDriveMode.TARGET_FACING_FIELD_ORIENTED, swerveDrive, xboxController));
     xboxController.rightBumper().and(xboxController.leftBumper()).whileTrue(new SwerveController(
       RobotDriveMode.TARGET_ORBIT, swerveDrive, xboxController));
     
+    //Reset Drive heading
     xboxController.start().onTrue(new ResetSwerveHeading(swerveDrive));
     
   }
