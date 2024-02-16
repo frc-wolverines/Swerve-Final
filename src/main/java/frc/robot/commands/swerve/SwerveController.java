@@ -6,6 +6,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.montylib.util.LimelightHelper;
 import frc.montylib.util.MontyMath;
 import frc.montylib.util.VariableSpeedController;
 import frc.montylib.util.VariableSpeedController.TriSpeedCalculateMode;
@@ -22,18 +23,20 @@ public class SwerveController extends Command {
 
   //User input suppliers
   private Supplier<Double> xSupplier, ySupplier, rSupplier, slowSupplier, fastSupplier;
-  private Supplier<Boolean> robotOrbitTrigger, robotRelativeTrigger, robotFaceTrigger;
   
   //Slew rate limiters and speed controllers
   private final SlewRateLimiter xLimiter, yLimiter, rLimiter;
   private final VariableSpeedController xController, yController, rController;
+
+  //Robot drive mode
+  private final RobotDriveMode driveMode;
 
   /**
    * Constructs a new instance of SwerveDriveController
    * @param subsystem the drive subsystem used for feedback and control
    * @param controller the controller to grab user input from
    */
-  public SwerveController(Drive subsystem, CommandXboxController controller) {
+  public SwerveController(RobotDriveMode mode, Drive subsystem, CommandXboxController controller) {
     //Defining Drive subsystem
     this.driveSubsystem = subsystem;
 
@@ -45,11 +48,6 @@ public class SwerveController extends Command {
     //Defining User input trigger axis
     this.slowSupplier = () -> controller.getLeftTriggerAxis();
     this.fastSupplier = () -> controller.getRightTriggerAxis();
-
-    //User input drive mode events
-    this.robotOrbitTrigger = () -> controller.leftBumper().and(controller.rightBumper()).getAsBoolean();
-    this.robotRelativeTrigger = () -> controller.leftBumper().getAsBoolean();
-    this.robotFaceTrigger = () -> controller.rightTrigger().getAsBoolean();
 
     //Defining SlewRateLimiters
     this.xLimiter = new SlewRateLimiter(3);
@@ -66,6 +64,8 @@ public class SwerveController extends Command {
     yController.enableTriSpeedControl(DriverUtil.kTeleOpSpeeds[1], DriverUtil.kTeleOpSpeeds[2], DriverUtil.kTeleOpSpeeds[0]);
     rController.enableTriSpeedControl(
       DriverUtil.kTeleOpAngularSpeeds[1], DriverUtil.kTeleOpAngularSpeeds[2], DriverUtil.kTeleOpAngularSpeeds[0]);
+
+    this.driveMode = mode;
 
     //Command requirements
     addRequirements(subsystem);
@@ -94,25 +94,8 @@ public void initialize() { /*Nothing to see here*/ }
 
     //Creating a temporary and output ChassisSpeeds
     ChassisSpeeds speeds = new ChassisSpeeds(x, y, r);
-    ChassisSpeeds outputSpeeds;
-
-    if (robotOrbitTrigger.get()) {
-      //Defines outputSpeed to a calculated value from speeds (ORBIT)
-      outputSpeeds = SwerveDriveCommandHandler.getDriveModeChassisSpeeds(
-        RobotDriveMode.TARGET_ORBIT, speeds, 0.0, driveSubsystem.getRotation2d());
-    } else if (robotFaceTrigger.get()) {
-      //Defines outputSpeed to a calculated value from speeds (TARGET-FACING)
-      outputSpeeds = SwerveDriveCommandHandler.getDriveModeChassisSpeeds(
-        RobotDriveMode.TARGET_FACING_FIELD_ORIENTED, speeds, 0.0, driveSubsystem.getRotation2d());
-    } else if (robotRelativeTrigger.get()) {
-      //Defines outputSpeed to a calculated value from speeds (ROBOT-RELATIVE)
-      outputSpeeds = SwerveDriveCommandHandler.getDriveModeChassisSpeeds(
-        RobotDriveMode.STANDARD_ROBOT_RELATIVE, speeds, 0.0, driveSubsystem.getRotation2d());
-    } else {
-      //Defines outputSpeed to a calculated value from speeds (FIELD-CENTRIC)
-      outputSpeeds = SwerveDriveCommandHandler.getDriveModeChassisSpeeds(
-        RobotDriveMode.STANDARD_FIELD_CENTRIC, speeds, 0.0, driveSubsystem.getRotation2d());
-    }
+    ChassisSpeeds outputSpeeds = SwerveDriveCommandHandler.getDriveModeChassisSpeeds(
+      driveMode, speeds, LimelightHelper.getTX(""), driveSubsystem.getRotation2d());
 
     //Drive output
     driveSubsystem.setDesiredSpeeds(outputSpeeds);
