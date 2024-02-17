@@ -62,18 +62,18 @@ public class VariableSpeedController {
             case BOTH:
                 return 
                 speeds[0] + 
-                MontyMath.valueDifference(speeds[0], speeds[1] * primary_axis) - 
-                MontyMath.valueDifference(speeds[0], speeds[2] * second_axis);
+                MontyMath.valueDifference(speeds[0], speeds[1]) * primary_axis - 
+                MontyMath.valueDifference(speeds[0], speeds[2]) * second_axis;
             case DECREASE:
             return 
                 speeds[0] - 
-                MontyMath.valueDifference(speeds[0], speeds[1] * primary_axis) - 
-                MontyMath.valueDifference(speeds[0], speeds[2] * second_axis);
+                MontyMath.valueDifference(speeds[0], speeds[1]) * primary_axis - 
+                MontyMath.valueDifference(speeds[0], speeds[2]) * second_axis;
                 case INCREASE:
             return 
                 speeds[0] + 
-                MontyMath.valueDifference(speeds[0], speeds[1] * primary_axis) + 
-                MontyMath.valueDifference(speeds[0], speeds[2] * second_axis);
+                MontyMath.valueDifference(speeds[0], speeds[1]) * primary_axis + 
+                MontyMath.valueDifference(speeds[0], speeds[2]) * second_axis;
             default:
                 return speeds[0];
         }

@@ -1,6 +1,8 @@
 package frc.robot;
 
-public class DriverUtil {
+import edu.wpi.first.math.util.Units;
+
+public class DriverConstants {
     //User input constants
     public static final int kDriverControllerPort = 0;
     public static final int kOperatorControllerPort = 1;
@@ -8,13 +10,13 @@ public class DriverUtil {
 
     //The stepped speeds that will be used in multivariable speed mode
     public static final double[] kTeleOpSpeeds = {
-        5, 7.5, 12
+        Units.feetToMeters(5), Units.feetToMeters(7.5), Units.feetToMeters(12)
     };
 
     //The stepped angular speeds that will be used in multivariable speed mode
     public static final double[] kTeleOpAngularSpeeds = {
-        2.5 * Math.PI, 
-        3 * Math.PI,
-        5 * Math.PI
+        0.75, 
+        1.25,
+        2
     };
 }

@@ -5,18 +5,46 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.montylib.util.AlertLog;
 import frc.montylib.util.AlertLog.StringAlertType;
+import frc.robot.commands.shooter.ShooterController;
 import frc.robot.commands.swerve.ResetSwerveHeading;
 import frc.robot.commands.swerve.SwerveController;
+import frc.robot.systems.handlers.ShooterCommandHandler.ShooterPivotMode;
+import frc.robot.systems.handlers.ShooterCommandHandler.ShooterPreset;
 import frc.robot.systems.handlers.SwerveDriveCommandHandler.RobotDriveMode;
+import frc.robot.systems.shooter.Primer;
+import frc.robot.systems.shooter.Shooter;
+import frc.robot.systems.shooter.ShooterConstants;
+import frc.robot.systems.shooter.Primer.PrimerMode;
 import frc.robot.systems.swerve.Drive;
 
 public class CommandContainer {
   public Drive swerveDrive = new Drive();
+  public Shooter shooter = new Shooter(ShooterConstants.kShooterConfig);
+  public Primer primer = new Primer(ShooterConstants.kShooterConfig);
 
-  public CommandXboxController xboxController = new CommandXboxController(DriverUtil.kDriverControllerPort);
+  public CommandXboxController driveController = new CommandXboxController(DriverConstants.kDriverControllerPort);
+  public CommandXboxController operatorController = new CommandXboxController(DriverConstants.kOperatorControllerPort);
 
   public CommandContainer() {
-    swerveDrive.setDefaultCommand(new SwerveController(RobotDriveMode.STANDARD_FIELD_CENTRIC, swerveDrive, xboxController));
+    swerveDrive.setDefaultCommand(new SwerveController(RobotDriveMode.STANDARD_FIELD_CENTRIC, swerveDrive, driveController));
+
+    shooter.setDefaultCommand(new ShooterController(
+      PrimerMode.SHOOT, 
+      ShooterPivotMode.TRACKED, 
+      ShooterPreset.IDLE, 
+      shooter, 
+      primer, 
+      operatorController
+    ));
+
+    primer.setDefaultCommand(new ShooterController(
+      PrimerMode.SHOOT, 
+      ShooterPivotMode.TRACKED, 
+      ShooterPreset.IDLE, 
+      shooter, 
+      primer, 
+      operatorController
+    ));
 
     configureBindings();
   }
@@ -24,13 +52,13 @@ public class CommandContainer {
   private void configureBindings() {
 
     //Different Drive modes
-    xboxController.leftBumper().whileTrue(new SwerveController(RobotDriveMode.STANDARD_ROBOT_RELATIVE, swerveDrive, xboxController));
-    xboxController.rightBumper().whileTrue(new SwerveController(RobotDriveMode.TARGET_FACING_FIELD_ORIENTED, swerveDrive, xboxController));
-    xboxController.rightBumper().and(xboxController.leftBumper()).whileTrue(new SwerveController(
-      RobotDriveMode.TARGET_ORBIT, swerveDrive, xboxController));
+    driveController.leftBumper().whileTrue(new SwerveController(RobotDriveMode.STANDARD_ROBOT_RELATIVE, swerveDrive, driveController));
+    driveController.rightBumper().whileTrue(new SwerveController(RobotDriveMode.TARGET_FACING_FIELD_ORIENTED, swerveDrive, driveController));
+    driveController.rightBumper().and(driveController.leftBumper()).whileTrue(new SwerveController(
+      RobotDriveMode.TARGET_ORBIT, swerveDrive, driveController));
     
     //Reset Drive heading
-    xboxController.start().onTrue(new ResetSwerveHeading(swerveDrive));
+    driveController.start().onTrue(new ResetSwerveHeading(swerveDrive));
     
   }
 

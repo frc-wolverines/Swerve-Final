@@ -14,7 +14,10 @@ public class ResetSwerveHeading extends Command {
   }
 
   @Override
-  public void initialize() {
+  public void initialize() {}
+
+  @Override 
+  public void execute() {
     driveSubsystem.resetHeading();
   }
 
@@ -23,6 +26,6 @@ public class ResetSwerveHeading extends Command {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

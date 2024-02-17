@@ -7,7 +7,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 public class SwerveDriveCommandHandler {
     
     //PID Controller used to rotate the robot so that the camera's crosshair is centered on a target
-    public static PIDController target_pid_controller = new PIDController(0.05, 0, 0);
+    public static PIDController target_pid_controller = new PIDController(0.03, 0, 0);
 
     //Object representing different possible drive modes
     public static enum RobotDriveMode {
@@ -26,25 +26,18 @@ public class SwerveDriveCommandHandler {
      * @return a ChassisSpeeds dependant on the given mode
      */
     public static ChassisSpeeds getDriveModeChassisSpeeds(RobotDriveMode mode, ChassisSpeeds speeds, double target_x, Rotation2d robot_rotation) {
-        switch (mode) {
-            case TARGET_FACING_FIELD_ORIENTED:
-                ChassisSpeeds.fromFieldRelativeSpeeds(
-                    speeds.vxMetersPerSecond, 
-                    speeds.vyMetersPerSecond, 
-                    target_pid_controller.calculate(target_x, 0.0), 
-                    robot_rotation);
-            case TARGET_ORBIT:
-                ChassisSpeeds.fromRobotRelativeSpeeds(
-                    speeds.vxMetersPerSecond, 
-                    speeds.vyMetersPerSecond, 
-                    target_pid_controller.calculate(target_x, 0.0), 
-                    robot_rotation);
-            case STANDARD_FIELD_CENTRIC:
-                ChassisSpeeds.fromFieldRelativeSpeeds(speeds, robot_rotation);
-            case STANDARD_ROBOT_RELATIVE:
-                ChassisSpeeds.fromRobotRelativeSpeeds(speeds, robot_rotation);
-            default:
-                return new ChassisSpeeds(0, 0, 0);
+        if(mode == RobotDriveMode.TARGET_ORBIT) {
+            return ChassisSpeeds.fromRobotRelativeSpeeds(
+                speeds.vxMetersPerSecond, speeds.vyMetersPerSecond, target_pid_controller.calculate(target_x, 0.0), robot_rotation);
+        } else if(mode == RobotDriveMode.TARGET_FACING_FIELD_ORIENTED) {
+            return ChassisSpeeds.fromFieldRelativeSpeeds(
+                speeds.vxMetersPerSecond, speeds.vyMetersPerSecond, target_pid_controller.calculate(target_x, 0.0), robot_rotation);
+        } else if(mode == RobotDriveMode.STANDARD_ROBOT_RELATIVE) {
+            return ChassisSpeeds.fromRobotRelativeSpeeds(
+                speeds, robot_rotation);
+        } else {
+            return ChassisSpeeds.fromFieldRelativeSpeeds(
+                speeds, robot_rotation);
         }
     }
 }

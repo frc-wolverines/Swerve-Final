@@ -25,6 +25,10 @@ public class Shooter extends SubsystemBase {
         pivotMotor.setPosition(0);
     }
 
+    public double getPivotPosition() {
+        return pivotMotor.getPosition().getValueAsDouble();
+    }
+
     public void setDesiredState(ShooterState state) {
 
         topShooterMotor.set(state.top_power);

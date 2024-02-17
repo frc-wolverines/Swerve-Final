@@ -11,7 +11,7 @@ import frc.montylib.util.MontyMath;
 import frc.montylib.util.VariableSpeedController;
 import frc.montylib.util.VariableSpeedController.TriSpeedCalculateMode;
 import frc.montylib.util.VariableSpeedController.VariableSpeedMode;
-import frc.robot.DriverUtil;
+import frc.robot.DriverConstants;
 import frc.robot.systems.handlers.SwerveDriveCommandHandler;
 import frc.robot.systems.handlers.SwerveDriveCommandHandler.RobotDriveMode;
 import frc.robot.systems.swerve.Drive;
@@ -60,10 +60,10 @@ public class SwerveController extends Command {
     this.rController = new VariableSpeedController(VariableSpeedMode.TRI_SPEED);
 
     //SpeedController setup
-    xController.enableTriSpeedControl(DriverUtil.kTeleOpSpeeds[1], DriverUtil.kTeleOpSpeeds[2], DriverUtil.kTeleOpSpeeds[0]);
-    yController.enableTriSpeedControl(DriverUtil.kTeleOpSpeeds[1], DriverUtil.kTeleOpSpeeds[2], DriverUtil.kTeleOpSpeeds[0]);
+    xController.enableTriSpeedControl(DriverConstants.kTeleOpSpeeds[1], DriverConstants.kTeleOpSpeeds[2], DriverConstants.kTeleOpSpeeds[0]);
+    yController.enableTriSpeedControl(DriverConstants.kTeleOpSpeeds[1], DriverConstants.kTeleOpSpeeds[2], DriverConstants.kTeleOpSpeeds[0]);
     rController.enableTriSpeedControl(
-      DriverUtil.kTeleOpAngularSpeeds[1], DriverUtil.kTeleOpAngularSpeeds[2], DriverUtil.kTeleOpAngularSpeeds[0]);
+      DriverConstants.kTeleOpAngularSpeeds[1], DriverConstants.kTeleOpAngularSpeeds[2], DriverConstants.kTeleOpAngularSpeeds[0]);
 
     this.driveMode = mode;
 
@@ -83,9 +83,9 @@ public void initialize() { /*Nothing to see here*/ }
     double r = rSupplier.get();
 
     //Applying a deadzone where the value will be discarded
-    x = MontyMath.applyValueThreshold(x, DriverUtil.kControlAxisThreshold);
-    y = MontyMath.applyValueThreshold(y, DriverUtil.kControlAxisThreshold);
-    r = MontyMath.applyValueThreshold(r, DriverUtil.kControlAxisThreshold);
+    x = MontyMath.applyValueThreshold(x, DriverConstants.kControlAxisThreshold);
+    y = MontyMath.applyValueThreshold(y, DriverConstants.kControlAxisThreshold);
+    r = MontyMath.applyValueThreshold(r, DriverConstants.kControlAxisThreshold);
 
     //Applying the SlewRateLimiter and SpeedController calculations
     x = xLimiter.calculate(x) * xController.calculate(TriSpeedCalculateMode.BOTH, fastSupplier.get(), slowSupplier.get());
