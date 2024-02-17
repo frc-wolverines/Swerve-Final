@@ -21,9 +21,9 @@ public class Primer extends SubsystemBase {
     }
 
     public void setDesiredSpeed(PrimerMode mode, double power) {
-        if (mode == PrimerMode.PRIME) {
+        if (mode == PrimerMode.BRAKE) {
             primerMotor.setIdleMode(IdleMode.kBrake);
-        } else if (mode == PrimerMode.SHOOT) {
+        } else if (mode == PrimerMode.NO_BRAKE) {
             primerMotor.setIdleMode(IdleMode.kCoast);
         } else {             
             primerMotor.setIdleMode(IdleMode.kBrake);
@@ -37,7 +37,7 @@ public class Primer extends SubsystemBase {
     }
 
     public enum PrimerMode {
-        SHOOT,
-        PRIME
+        NO_BRAKE,
+        BRAKE
     }
 }

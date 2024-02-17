@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.montylib.util.AlertLog;
 import frc.montylib.util.AlertLog.StringAlertType;
+import frc.robot.commands.shooter.PrimerController;
 import frc.robot.commands.shooter.ShooterController;
 import frc.robot.commands.swerve.ResetSwerveHeading;
 import frc.robot.commands.swerve.SwerveController;
@@ -35,6 +36,8 @@ public class CommandContainer {
       driveController
     ));
 
+    primer.setDefaultCommand(new PrimerController(PrimerMode.BRAKE, primer, () -> 0.0));
+
     configureBindings();
   }
 
@@ -45,6 +48,9 @@ public class CommandContainer {
     driveController.rightBumper().whileTrue(new SwerveController(RobotDriveMode.TARGET_FACING_FIELD_ORIENTED, swerveDrive, driveController));
     driveController.rightBumper().and(driveController.leftBumper()).whileTrue(new SwerveController(
       RobotDriveMode.TARGET_ORBIT, swerveDrive, driveController));
+
+    operatorController.leftBumper().whileTrue(new PrimerController(PrimerMode.NO_BRAKE, primer, () -> 1.0));
+    operatorController.rightBumper().whileTrue(new PrimerController(PrimerMode.NO_BRAKE, primer, () -> 0.5));
     
     //Reset Drive heading
     driveController.start().onTrue(new ResetSwerveHeading(swerveDrive));
