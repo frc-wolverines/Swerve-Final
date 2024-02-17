@@ -21,13 +21,12 @@ public class Primer extends SubsystemBase {
     }
 
     public void setDesiredSpeed(PrimerMode mode, double power) {
-        switch (mode) {
-            case PRIME:
-                primerMotor.setIdleMode(IdleMode.kBrake);
-            case SHOOT:
-                primerMotor.setIdleMode(IdleMode.kCoast);
-            default:
-                primerMotor.setIdleMode(IdleMode.kBrake);
+        if (mode == PrimerMode.PRIME) {
+            primerMotor.setIdleMode(IdleMode.kBrake);
+        } else if (mode == PrimerMode.SHOOT) {
+            primerMotor.setIdleMode(IdleMode.kCoast);
+        } else {             
+            primerMotor.setIdleMode(IdleMode.kBrake);
         }
 
         primerMotor.set(power);

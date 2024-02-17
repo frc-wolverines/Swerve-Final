@@ -29,21 +29,10 @@ public class CommandContainer {
     swerveDrive.setDefaultCommand(new SwerveController(RobotDriveMode.STANDARD_FIELD_CENTRIC, swerveDrive, driveController));
 
     shooter.setDefaultCommand(new ShooterController(
-      PrimerMode.SHOOT, 
       ShooterPivotMode.TRACKED, 
       ShooterPreset.IDLE, 
       shooter, 
-      primer, 
-      operatorController
-    ));
-
-    primer.setDefaultCommand(new ShooterController(
-      PrimerMode.SHOOT, 
-      ShooterPivotMode.TRACKED, 
-      ShooterPreset.IDLE, 
-      shooter, 
-      primer, 
-      operatorController
+      driveController
     ));
 
     configureBindings();
