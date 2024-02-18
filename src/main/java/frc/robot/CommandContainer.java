@@ -10,7 +10,7 @@ import frc.robot.commands.shooter.ShooterController;
 import frc.robot.commands.swerve.ResetSwerveHeading;
 import frc.robot.commands.swerve.SwerveController;
 import frc.robot.systems.handlers.ShooterCommandHandler.ShooterPivotMode;
-import frc.robot.systems.handlers.ShooterCommandHandler.ShooterPreset;
+import frc.robot.systems.handlers.ShooterCommandHandler.ShooterProfile;
 import frc.robot.systems.handlers.SwerveDriveCommandHandler.RobotDriveMode;
 import frc.robot.systems.shooter.Primer;
 import frc.robot.systems.shooter.Shooter;
@@ -31,7 +31,7 @@ public class CommandContainer {
 
     shooter.setDefaultCommand(new ShooterController(
       ShooterPivotMode.TRACKED, 
-      ShooterPreset.IDLE, 
+      ShooterProfile.IDLE, 
       shooter, 
       driveController
     ));

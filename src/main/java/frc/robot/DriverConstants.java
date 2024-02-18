@@ -10,7 +10,7 @@ public class DriverConstants {
 
     //The stepped speeds that will be used in multivariable speed mode
     public static final double[] kTeleOpSpeeds = {
-        Units.feetToMeters(5), Units.feetToMeters(7.5), Units.feetToMeters(12)
+        Units.feetToMeters(5), Units.feetToMeters(10), Units.feetToMeters(12)
     };
 
     //The stepped angular speeds that will be used in multivariable speed mode

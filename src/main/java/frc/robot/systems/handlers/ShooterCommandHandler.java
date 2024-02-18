@@ -2,19 +2,19 @@ package frc.robot.systems.handlers;
 
 import edu.wpi.first.math.controller.PIDController;
 import frc.montylib.util.LimelightHelper;
-import frc.robot.systems.shooter.ShooterConstants;
 import frc.robot.systems.shooter.util.ShooterState;
+import frc.robot.systems.superstructure.ShooterGoal.PositionGoal;
 
 public class ShooterCommandHandler {
 
-    private static double SUBWOOFER_SHOOTER_COEFFICIENT = 1.0;
-    private static double SUBWOOFER_POSITION = ShooterConstants.kMaxPosition;
+    private static double SUBWOOFER_VELOCITY = PositionGoal.SPEAKER.getShooterVelocity();
+    private static double SUBWOOFER_POSITION = PositionGoal.SPEAKER.getPosition();
 
-    private static double AMP_SHOOTER_COEFFICIENT = 0.18;
-    private static double AMP_POSITION = ShooterConstants.kMaxPosition;
+    private static double AMP_VELOCITY = PositionGoal.AMP.getShooterVelocity();
+    private static double AMP_POSITION = PositionGoal.AMP.getPosition();
 
-    private static double IDLE_SHOOTER_COEFFICIENT = 0.0;
-    private static double IDLE_POSITION = ShooterConstants.kIdlePosition;
+    private static double IDLE_VELOCITY = PositionGoal.IDLE.getShooterVelocity();
+    private static double IDLE_POSITION = PositionGoal.IDLE.getPosition();
 
     private static PIDController pivotController = new PIDController(0.05, 0.0, 0.0);
 
@@ -27,7 +27,7 @@ public class ShooterCommandHandler {
             return new ShooterState(top_power, bottom_power, pivot_power);
         }
 
-        public ShooterState getTrackedState(ShooterState state, double pivot_position) {
+        public ShooterState getTrackedState(ShooterState state) {
             return new ShooterState(
                 state.top_power, 
                 state.bottom_power, 
@@ -35,31 +35,31 @@ public class ShooterCommandHandler {
             );
         }
 
-        public ShooterState getPresetState(ShooterState state, ShooterPreset preset, double pivot_position) {
-            return preset.getState(state, pivot_position);
+        public ShooterState getPresetState(ShooterProfile preset, double pivot_position) {
+            return preset.getState(pivot_position);
         }
     }
 
-    public enum ShooterPreset {
+    public enum ShooterProfile {
         SUBWOOFER,
         AMP,
         IDLE;
 
-        public ShooterState getState(ShooterState state, double pivot_position) {
+        public ShooterState getState(double pivot_position) {
             if (this.equals(SUBWOOFER)) {
                 return new ShooterState(
-                    state.top_power * SUBWOOFER_SHOOTER_COEFFICIENT, 
-                    state.bottom_power * SUBWOOFER_SHOOTER_COEFFICIENT, 
+                    SUBWOOFER_VELOCITY, 
+                    SUBWOOFER_VELOCITY, 
                     pivotController.calculate(pivot_position, SUBWOOFER_POSITION));
             } else if (this.equals(AMP)) {
                 return new ShooterState(
-                    state.top_power * AMP_SHOOTER_COEFFICIENT, 
-                    state.bottom_power * AMP_SHOOTER_COEFFICIENT, 
+                    AMP_VELOCITY, 
+                    AMP_VELOCITY, 
                     pivotController.calculate(pivot_position, AMP_POSITION));
             } else {
                 return new ShooterState(
-                    state.top_power * IDLE_SHOOTER_COEFFICIENT, 
-                    state.bottom_power * IDLE_SHOOTER_COEFFICIENT, 
+                    IDLE_VELOCITY, 
+                    IDLE_VELOCITY, 
                     pivotController.calculate(pivot_position, IDLE_POSITION));
             }
         }
