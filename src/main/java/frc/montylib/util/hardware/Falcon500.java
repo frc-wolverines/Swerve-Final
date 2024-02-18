@@ -1,18 +1,17 @@
 package frc.montylib.util.hardware;
 
-import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.math.controller.PIDController;
-
 import frc.montylib.util.PIDConstants;
 
-public class NEO extends CANSparkMax {
+public class Falcon500 extends TalonFX {
 
     public double actuationGearRatio = 0.0;
     public PIDController velocityController = new PIDController(0.0, 0.0, 0.0);
     public PIDController positionController = new PIDController(0.0, 0.0, 0.0);
 
-    public NEO(int deviceId) {
-        super(deviceId, MotorType.kBrushless);
+    public Falcon500(int deviceId) {
+        super(deviceId);
     }
 
     public void setActuationGearRatio(double ratio) {
@@ -28,19 +27,19 @@ public class NEO extends CANSparkMax {
     }
 
     public double getActuatedVelocity() {
-        return this.getEncoder().getVelocity() / 60 * actuationGearRatio;
+        return this.getVelocity().getValueAsDouble() * actuationGearRatio;
     }
 
     public double getActuatedPosition() {
-        return this.getEncoder().getPosition() * actuationGearRatio;
+        return this.getPosition().getValueAsDouble() * actuationGearRatio;
     }
 
     public void runToVelocity(double velocity) {
-        this.set(velocityController.calculate(this.getEncoder().getVelocity() / 60, velocity));
+        this.set(velocityController.calculate(this.getVelocity().getValueAsDouble(), velocity));
     }
 
     public void runToPosition(double position) {
-        this.set(positionController.calculate(this.getEncoder().getPosition(), position));
+        this.set(positionController.calculate(this.getPosition().getValueAsDouble(), position));
     }
 
     public void runToActuateVelocity(double velocity) {
