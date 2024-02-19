@@ -1,0 +1,58 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 0.7064359979708661,
+        "y": 6.7042523739002275
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 0.6505854837274647,
+        "y": 8.172746736559859
+      },
+      "isLocked": false,
+      "linkedName": "Start 1"
+    },
+    {
+      "anchor": {
+        "x": 7.509156395431436,
+        "y": 7.493460294123978
+      },
+      "prevControl": {
+        "x": 0.8705196983134085,
+        "y": 7.461884676594213
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "Park 1 a3"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.5,
+      "rotationDegrees": 0,
+      "rotateFast": false
+    }
+  ],
+  "constraintZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -1.2132526732920275,
+    "rotateFast": false
+  },
+  "reversed": false,
+  "folder": "Park",
+  "previewStartingState": {
+    "rotation": 60.8237160958655,
+    "velocity": 0
+  },
+  "useDefaultConstraints": true
+}

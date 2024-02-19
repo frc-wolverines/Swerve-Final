@@ -1,0 +1,31 @@
+{
+  "version": 1.0,
+  "startingPose": {
+    "position": {
+      "x": 0.7064359979708661,
+      "y": 6.7042523739002275
+    },
+    "rotation": 60.86546229537809
+  },
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "named",
+          "data": {
+            "name": "AutoShoot"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Park From Start 1 a2"
+          }
+        }
+      ]
+    }
+  },
+  "folder": "Park",
+  "choreoAuto": false
+}
