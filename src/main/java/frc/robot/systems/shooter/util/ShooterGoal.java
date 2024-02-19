@@ -2,7 +2,6 @@ package frc.robot.systems.shooter.util;
 
 import frc.montylib.kinematics.ShooterPosition;
 import frc.montylib.kinematics.ShooterState;
-import frc.robot.systems.shooter.ShooterConstants;
 
 public class ShooterGoal {
 
