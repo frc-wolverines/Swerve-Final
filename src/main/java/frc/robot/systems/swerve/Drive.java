@@ -1,22 +1,33 @@
 package frc.robot.systems.swerve;
 
+import com.pathplanner.lib.auto.AutoBuilder;
+
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import frc.montylib.swerve.DriveIOFrame;
+import frc.montylib.swerve.PathFollowerFrame;
 import frc.montylib.util.AlertLog;
+import frc.montylib.util.DashboardLog;
 import frc.montylib.util.AlertLog.StringAlertType;
 import frc.montylib.util.hardware.NavX2;
+import frc.robot.riointerface.AutonomousUtil;
 
-public class Drive extends DriveIOFrame {
+public class Drive extends DriveIOFrame implements PathFollowerFrame {
 
     //Modules
     private final NEOModule[] modules;
 
     //Gyroscope
     private final NavX2 gyro;
+
+    private final SwerveDriveOdometry odometryData;
+    private final Field2d fieldData;
 
     /**Constructs a new instance of Drive*/
     public Drive() {
@@ -32,6 +43,9 @@ public class Drive extends DriveIOFrame {
         //Defining Gyroscope
         gyro = new NavX2();
 
+        odometryData = new SwerveDriveOdometry(DriveConstants.kDriveKinematics, getRotation2d(), getModulePositions());
+        fieldData = new Field2d();
+
         //Creates a process thread to handle drive initialization
         new Thread(() -> {
             try {
@@ -44,11 +58,30 @@ public class Drive extends DriveIOFrame {
 
                 //Logs a successful initialization
                 new AlertLog("Swerve Drive initialization successful", StringAlertType.INFO);
+
+                //Adds field data to the dashboard
+                new DashboardLog("Field Data", fieldData);
             } catch (Exception e) {
                 //Logs as a critical error
                 new AlertLog(e.toString(), StringAlertType.CRITICAL_ERROR);
             }
         }).start();
+
+        AutoBuilder.configureHolonomic(
+            this::getPose2d, 
+            this::resetPose2d, 
+            this::getCurrentSpeeds, 
+            this::setDesiredRelativeSpeeds, 
+            DriveConstants.kDriveHolonomicConfig, 
+            AutonomousUtil.isAllianceRed(), 
+            this
+        );
+    }
+
+    @Override
+    public void periodic() {
+        odometryData.update(getRotation2d(), getModulePositions());
+        fieldData.setRobotPose(odometryData.getPoseMeters());
     }
 
     @Override
@@ -122,5 +155,27 @@ public class Drive extends DriveIOFrame {
         for(int i = 0; i < modules.length; i++) {
             modules[i].zeroPivotPosition();
         }
+    }
+
+    @Override
+    public Pose2d getPose2d() {
+        return odometryData.getPoseMeters();
+    }
+
+    @Override
+    public void resetPose2d(Pose2d pose) {
+        odometryData.resetPosition(getRotation2d(), getModulePositions(), pose);
+    }
+
+    @Override
+    public ChassisSpeeds getCurrentSpeeds() {
+        return DriveConstants.kDriveKinematics.toChassisSpeeds(getModuleStates());
+    }
+
+    @Override
+    public void setDesiredRelativeSpeeds(ChassisSpeeds speeds) {
+        ChassisSpeeds outSpeeds = ChassisSpeeds.discretize(speeds, 0.02);
+
+        setDesiredSpeeds(outSpeeds);
     }
 }

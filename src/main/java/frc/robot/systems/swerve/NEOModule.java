@@ -93,7 +93,7 @@ public class NEOModule extends ModuleIOFrame {
     public double getPivotAbsolutePosition() {
         //Returns the current wheel absolute pivot position in radians traveled
         return absoluteEncoderDirection == MotorDirection.REVERSE ? 
-            -absoluteEncoder.getAbsolutePosition().getValueAsDouble() : absoluteEncoder.getAbsolutePosition().getValueAsDouble();
+            -absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 2 * Math.PI : absoluteEncoder.getAbsolutePosition().getValueAsDouble() * 2 * Math.PI;
     }
 
     @Override

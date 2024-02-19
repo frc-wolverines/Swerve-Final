@@ -6,7 +6,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public abstract class DriveIOFrame extends SubsystemBase {
+public abstract class DriveIOFrame extends SubsystemBase{
     //Feedback
     public abstract double getHeading();
     public abstract Rotation2d getRotation2d();

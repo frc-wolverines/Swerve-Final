@@ -1,6 +1,8 @@
 package frc.robot.systems.swerve;
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
+import com.pathplanner.lib.util.ReplanningConfig;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -60,5 +62,14 @@ public class DriveConstants {
         kRightFrontModulePosition,
         kLeftBackModulePosition,
         kRightBackModulePosition
+    );
+
+    //Drive HolonomicPathFollower Config
+    public static final HolonomicPathFollowerConfig kDriveHolonomicConfig = new HolonomicPathFollowerConfig(
+        new PIDConstants(5.0, 0.0, 0.0), 
+        new PIDConstants(5.0, 0.0, 0.0), 
+        kMaxModuleSpeed, 
+        0.4, 
+        new ReplanningConfig()
     );
 }
