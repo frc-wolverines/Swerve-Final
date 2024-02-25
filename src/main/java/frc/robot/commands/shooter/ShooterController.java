@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
   import frc.robot.systems.shooter.Shooter;
 import frc.robot.systems.shooter.util.ShooterGoal.ShooterPositionMode;
 
+@SuppressWarnings("unused")
 public class ShooterController extends Command {
 
   private Shooter shooterSubsystem;
