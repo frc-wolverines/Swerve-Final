@@ -4,19 +4,20 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.montylib.kinematics.ShooterPosition;
+import frc.montylib.kinematics.ShooterState;
 import frc.montylib.util.DashboardLog;
 import frc.montylib.util.MontyMath;
 import frc.montylib.util.hardware.Falcon500;
 import frc.montylib.util.hardware.NEO;
 import frc.robot.systems.shooter.util.ShooterConfig;
 
-public class ShooterPod extends SubsystemBase {
+public class Shooter extends SubsystemBase {
 
     private final Falcon500 topShooterMotor, bottomShooterMotor;
     private final Falcon500 pivotMotor;
     private final NEO primerMotor;
 
-    public ShooterPod(ShooterConfig config) {
+    public Shooter(ShooterConfig config) {
         topShooterMotor = new Falcon500(config.top_shooter_id);
         bottomShooterMotor = new Falcon500(config.bottom_shooter_id);
         pivotMotor = new Falcon500(config.pivoter_id);
@@ -60,6 +61,15 @@ public class ShooterPod extends SubsystemBase {
                 ShooterConstants.kPositionMax
         ));
         primerMotor.runToActuateVelocity(position.vp_rotations_per_second);
+
+    }
+
+    public void setDesiredState(ShooterState state) {
+
+        topShooterMotor.runToActuateVelocity(state.vt_rotations_per_second);
+        bottomShooterMotor.runToActuateVelocity(state.vb_rotations_per_second);
+        pivotMotor.set(state.pivot_power_percentage);
+        primerMotor.runToActuateVelocity(state.vp_rotations_per_second);
 
     }
 

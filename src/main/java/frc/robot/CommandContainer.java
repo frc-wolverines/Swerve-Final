@@ -9,13 +9,13 @@ import frc.robot.commands.swerve.ResetSwerveHeading;
 import frc.robot.commands.swerve.SwerveController;
 
 import frc.robot.systems.handlers.SwerveDriveCommandHandler.RobotDriveMode;
-import frc.robot.systems.shooter.ShooterPod;
+import frc.robot.systems.shooter.Shooter;
 import frc.robot.systems.shooter.ShooterConstants;
 import frc.robot.systems.swerve.Drive;
 
 public class CommandContainer {
   public Drive swerveDrive = new Drive();
-  public ShooterPod shooter = new ShooterPod(ShooterConstants.kShooterConfig);
+  public Shooter shooter = new Shooter(ShooterConstants.kShooterConfig);
 
   public CommandXboxController driveController = new CommandXboxController(DriverConstants.kDriverControllerPort);
   public CommandXboxController operatorController = new CommandXboxController(DriverConstants.kOperatorControllerPort);
