@@ -66,7 +66,7 @@ public class Transport extends SubsystemBase {
         intakeMotor.runToActuateVelocity(state.vi_rotations_per_second);
         beltMotor.runToActuateVelocity(state.vb_rotations_per_second);
 
-        double pivotPower = pivotController.calculate(getPivotPosition(), state.intake_angle);
+        double pivotPower = pivotController.calculate(getPivotPosition(), state.intake_power_percentage);
         leftPivotMotor.set(pivotPower);
         rightPivotMotor.set(pivotPower);
 

@@ -5,7 +5,6 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
   import frc.robot.systems.shooter.Shooter;
-import frc.robot.systems.shooter.util.ShooterGoal.ShooterPositionMode;
 
 @SuppressWarnings("unused")
 public class ShooterController extends Command {
@@ -14,17 +13,13 @@ public class ShooterController extends Command {
   
   private Supplier<Double> shooterSupplier, primerSupplier, pivotSupplier;
 
-  private ShooterPositionMode mode;
-
-  public ShooterController(Shooter subsystem, CommandXboxController controller, ShooterPositionMode mode) {
+  public ShooterController(Shooter subsystem, CommandXboxController controller) {
     this.shooterSubsystem = subsystem;
 
     this.shooterSupplier = () -> controller.getLeftTriggerAxis() - controller.getRightTriggerAxis();
     this.pivotSupplier = () -> controller.getRightY();
     this.primerSupplier = () -> 
       (controller.leftBumper().getAsBoolean() ? 1.0 : controller.rightBumper().getAsBoolean() ? -1.0 : 0.0);
-
-    this.mode = mode;
     
     addRequirements(subsystem);
   }
@@ -34,14 +29,6 @@ public class ShooterController extends Command {
 
   @Override
   public void execute() {
-
-    if (mode == ShooterPositionMode.REACTIVE) {
-
-    } else if (mode == ShooterPositionMode.MANUAL) {
-
-    } else if (mode == ShooterPositionMode.PRESET) {
-      
-    }
 
   }
 
