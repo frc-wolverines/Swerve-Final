@@ -52,8 +52,9 @@ public class Shooter extends SubsystemBase {
 
         topShooterMotor.runToActuateVelocity(state.vt_rotations_per_second);
         bottomShooterMotor.runToActuateVelocity(state.vb_rotations_per_second);
-        pivotMotor.set(state.pivot_power_percentage);
         primerMotor.runToActuateVelocity(state.vp_rotations_per_second);
+        pivotMotor.set(state.pivot_power_percentage);
+
 
     }
 

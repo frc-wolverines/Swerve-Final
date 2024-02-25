@@ -15,6 +15,10 @@ public class PositionController {
         return controller.calculate(feedbackSupplier.get(), target_position);
     }
 
+    public double calculate(double current_position, double target_position) {
+        return controller.calculate(current_position, target_position);
+    }
+
     private PIDController controller;
     private Supplier<Double> feedbackSupplier;
 

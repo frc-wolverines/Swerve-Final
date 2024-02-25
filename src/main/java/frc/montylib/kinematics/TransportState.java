@@ -9,11 +9,11 @@ public class TransportState {
      * Constructs a new instance of TransportState
      * @param vintake the velocity of the intake wheels in Rotations per Second
      * @param vbelts the velocity of the transport belts and rollers in Rotations per Second
-     * @param intake_power the angle of the intake arm in decimal percentage
+     * @param pivot_power the angle of the intake arm in decimal percentage
      */
-    public TransportState(double vintake, double vbelts, double intake_power) {
+    public TransportState(double vintake, double vbelts, double pivot_power) {
         this.vi_rotations_per_second = vintake;
         this.vb_rotations_per_second = vbelts;
-        this.intake_power_percentage = intake_power;
+        this.intake_power_percentage = pivot_power;
     }
 }
