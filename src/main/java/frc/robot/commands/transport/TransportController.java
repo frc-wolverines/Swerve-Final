@@ -1,5 +1,6 @@
 package frc.robot.commands.transport;
 
+import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,7 +29,10 @@ public class TransportController extends Command {
     this.intakeSupplier = () -> 
       (controller.povDown().getAsBoolean() ? 1.0 : controller.povUp().getAsBoolean() ? -1.0 : 0.0);
     this.beltSupplier = () ->
-      (controller.povDown().getAsBoolean() ? 1.0 : controller.povUp().getAsBoolean() ? -1.0 : 0.0);
+      (
+        controller.povDown().or(controller.leftBumper()).getAsBoolean() ? 1.0 : 
+        controller.povUp().getAsBoolean() ? -1.0 : 0.0
+      );
     this.pivotSupplier = () -> 
       (controller.leftStick().getAsBoolean() ? controller.getLeftY() : 0.0);
 
