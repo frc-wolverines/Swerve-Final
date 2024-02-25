@@ -3,10 +3,8 @@ package frc.robot.systems.shooter;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkBase.IdleMode;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.montylib.kinematics.ShooterPosition;
 import frc.montylib.kinematics.ShooterState;
 import frc.montylib.util.DashboardLog;
-import frc.montylib.util.MontyMath;
 import frc.montylib.util.hardware.Falcon500;
 import frc.montylib.util.hardware.NEO;
 import frc.robot.systems.shooter.util.ShooterConfig;
@@ -48,20 +46,6 @@ public class Shooter extends SubsystemBase {
 
     public double getPivotPosition() {
         return pivotMotor.getPosition().getValueAsDouble();
-    }
-
-    public void setDesiredPosition(ShooterPosition position) {
-
-        topShooterMotor.runToActuateVelocity(position.vt_rotations_per_second);
-        bottomShooterMotor.runToActuateVelocity(position.vb_rotations_per_second);
-        pivotMotor.runToActuatePosition(
-            MontyMath.positionFromPercentage(
-                position.pivot_position_percentage, 
-                ShooterConstants.kPositionMin, 
-                ShooterConstants.kPositionMax
-        ));
-        primerMotor.runToActuateVelocity(position.vp_rotations_per_second);
-
     }
 
     public void setDesiredState(ShooterState state) {

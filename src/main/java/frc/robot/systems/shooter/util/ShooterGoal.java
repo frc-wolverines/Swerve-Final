@@ -1,6 +1,5 @@
 package frc.robot.systems.shooter.util;
 
-import frc.montylib.kinematics.ShooterPosition;
 import frc.montylib.kinematics.ShooterState;
 import frc.montylib.util.LimelightHelper;
 import frc.robot.systems.shooter.ShooterConstants;
@@ -47,30 +46,6 @@ public class ShooterGoal {
                 case SPEAKER: return 1.0;
                 default: return 0.0;
             }
-        }
-    }
-
-    public ShooterPosition toShooterPosition(ShooterState state, ShooterPositionMode mode, ShooterGoalPreset preset, double current_pivot_position) {
-        if (mode == ShooterPositionMode.MANUAL) {
-            return new ShooterPosition(
-                state.vt_rotations_per_second, 
-                state.vb_rotations_per_second, 
-                state.vp_rotations_per_second, 
-                current_pivot_position + state.pivot_power_percentage
-            );
-        } else if (mode == ShooterPositionMode.PRESET) {
-              return new ShooterPosition (
-                state.vt_rotations_per_second * preset.getShooterCoefficient(), 
-                state.vb_rotations_per_second * preset.getShooterCoefficient(), 
-                state.vp_rotations_per_second * preset.getPrimerCoefficient(), 
-                preset.getPosition()
-            );
-        } else {
-            return new ShooterPosition(
-                state.vt_rotations_per_second, 
-                state.vb_rotations_per_second, 
-                state.vp_rotations_per_second, 
-                current_pivot_position);
         }
     }
 
