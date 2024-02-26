@@ -9,6 +9,7 @@ import frc.robot.commands.shooter.ShooterController;
 import frc.robot.commands.swerve.ResetSwerveHeading;
 import frc.robot.commands.swerve.SwerveController;
 import frc.robot.commands.transport.TransportController;
+import frc.robot.riointerface.Robot;
 import frc.robot.systems.handlers.SwerveDriveCommandHandler.RobotDriveMode;
 import frc.robot.systems.shooter.Shooter;
 import frc.robot.systems.shooter.ShooterConstants;
@@ -62,7 +63,9 @@ public class CommandContainer {
   }
 
   public Command getAutonomousCommand() {
-    new AlertLog("Could not verify integrity of configured autonomous command", StringAlertType.FAULT);
-    return Commands.none();
+    return Robot.autoHandler.getAutonomousFromChooser().getAsPathPlannerAuto(
+      Robot.autoHandler.getAutonomousStartingPosition(), 
+      Robot.autoHandler.getAutonomousVarient()
+    );
   }
 }
