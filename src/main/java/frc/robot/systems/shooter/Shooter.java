@@ -2,6 +2,8 @@ package frc.robot.systems.shooter;
 
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.CANSparkBase.IdleMode;
+
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.montylib.kinematics.ShooterState;
 import frc.montylib.util.DashboardLog;
